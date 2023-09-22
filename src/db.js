@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
 
-const setting = `postgres://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+const setting = "postgres://localhost:5432/test-store";
 
 module.exports = new Sequelize(setting);

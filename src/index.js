@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 // Server start config
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 const start = async () => {
   try {
