@@ -3,11 +3,14 @@ const path = require("path");
 const fs = require("fs");
 
 const { Images } = require("../models/models");
+const { formateDataForFront } = require("../view/image.view");
 
 const getImages = async (req, res) => {
   try {
     const allImages = await Images.findAndCountAll();
-    return res.json(allImages);
+    const updatedData = formateDataForFront(allImages);
+
+    return res.json(updatedData);
   } catch (err) {
     return res.status(400).json("Bad request");
   }
