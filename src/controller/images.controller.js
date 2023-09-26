@@ -3,11 +3,20 @@ const path = require("path");
 const fs = require("fs");
 
 const { Images } = require("../models/models");
-const { formateDataForFront } = require("../view/image.view");
+const { formateDataForFront, formateDate } = require("../view/image.view");
+
+const getImagesCount = async (req, res) => {
+  try {
+    const imagesCount = await Images.count();
+    return res.json(imagesCount);
+  } catch (err) {
+    return res.status(400).json("Bad request");
+  }
+};
 
 const getImages = async (req, res) => {
   try {
-    const allImages = await Images.findAndCountAll();
+    const allImages = await Images.findAndCountAll({ order: [["id", "DESC"]] });
     const updatedData = formateDataForFront(allImages);
 
     return res.json(updatedData);
@@ -26,16 +35,22 @@ const addImages = async (req, res) => {
 
     // Добавляем данные в DB
     const image = await Images.create({ src: imageName });
+    const { id, src, title, createdAt } = image.dataValues;
+    const { dayMonth, monthYear } = formateDate(createdAt);
 
-    return res.json(image);
+    // Подготовка данных
+    const data = { date: monthYear, current: { id, title, src, date: dayMonth } };
+
+    return res.json(data);
+    // return res.json("good");
   } catch (err) {
     return res.status(400).json("Bad request");
   }
 };
 
 const addImageTitle = async (req, res) => {
-  const { title, id } = req.body;
-
+  const { title, id } = req.query;
+  console.log(id, title, "qweqwe");
   try {
     const image = await Images.findAll({ where: { id } });
     await image[0].update({ title });
@@ -47,7 +62,7 @@ const addImageTitle = async (req, res) => {
 };
 
 const deleteImage = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
 
   try {
     const image = await Images.findAll({ where: { id } });
@@ -73,4 +88,4 @@ const deleteImage = async (req, res) => {
   }
 };
 
-module.exports = { getImages, addImages, addImageTitle, deleteImage };
+module.exports = { getImagesCount, getImages, addImages, addImageTitle, deleteImage };

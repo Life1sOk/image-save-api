@@ -6,6 +6,7 @@ const imagesController = require("../controller/images.controller");
 const imagesRouter = express.Router();
 
 imagesRouter.get("/", imagesController.getImages);
+imagesRouter.get("/count", imagesController.getImagesCount);
 imagesRouter.post("/add", imagesController.addImages);
 imagesRouter.post("/add-title", imagesController.addImageTitle);
 imagesRouter.delete("/delete", imagesController.deleteImage);
