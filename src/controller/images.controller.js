@@ -5,15 +5,6 @@ const fs = require("fs");
 const { Images } = require("../models/models");
 const { formateDataForFront, formateDate } = require("../view/image.view");
 
-const getImagesCount = async (req, res) => {
-  try {
-    const imagesCount = await Images.count();
-    return res.json(imagesCount);
-  } catch (err) {
-    return res.status(400).json("Bad request");
-  }
-};
-
 const getImages = async (req, res) => {
   try {
     const allImages = await Images.findAndCountAll({ order: [["id", "DESC"]] });
@@ -88,4 +79,4 @@ const deleteImage = async (req, res) => {
   }
 };
 
-module.exports = { getImagesCount, getImages, addImages, addImageTitle, deleteImage };
+module.exports = { getImages, addImages, addImageTitle, deleteImage };
