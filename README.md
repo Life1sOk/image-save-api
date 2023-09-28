@@ -2,4 +2,4 @@
 
 Архитектура - MVC
 
-Стак: express.js, sequelize, PostgerSQL
+Стек: express.js, sequelize, PostgerSQL
