@@ -54,7 +54,7 @@ const addImageTitle = async (req, res) => {
 
 const deleteImage = async (req, res) => {
   const { id } = req.query;
-
+  console.log(id, "delete");
   try {
     const image = await Images.findAll({ where: { id } });
     const { src } = image[0];

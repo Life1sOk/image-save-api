@@ -1,0 +1,25 @@
+services:
+  image-saver-api:
+    container_name: backend
+    build: ./
+    command: npm start
+    working_dir: /project
+    environment:
+      - POSTGRES_URI=postgres://sally:secret@postgres:5432/images
+    links:
+      - postgres
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/project
+
+  # Postgres
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=sally
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=images
+      - POSTGRES_HOST=postgres
+    ports:
+      - "5432:5432"

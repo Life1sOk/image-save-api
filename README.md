@@ -2,4 +2,6 @@
 
 Архитектура - MVC
 
-Стек: express.js, sequelize, PostgerSQL
+Стак: express.js, sequelize, PostgerSQL
+
+Запуск: docker compose up
